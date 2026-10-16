@@ -4,7 +4,11 @@
 
 | 文件 | 来源 | 适配系统 | SHA256（二进制） |
 |---|---|---|---|
-| `AppleSunrise.kext` | KDK 26.7.1 build 25G241 | **macOS 26.7.x**（LSMinimumSystemVersion = 26.7） | `e9b08b41…b9d31c5c` |
+| `AppleSunrise.kext` | KDK 26.7.1 build 25G241 | **macOS 26.7.x+**（LSMinimumSystemVersion = 26.7） | `e9b08b41…b9d31c5c` |
+| `AppleSunrise-26.3.kext` | KDK 26.3 build 25D5087f（原帖实测同款） | **macOS 26.3 – 26.6**（LSMinimumSystemVersion = 26.3） | `d2f5893f…f277b594` |
+
+两个 kext 均为 **x86_64 + arm64e** 通用二进制，Bundle ID `com.apple.driver.AppleSunrise`，均从官方 KDK 原样提取未做改动。
+26.0–26.2 用户请自行下载对应 build 的 KDK 提取（26.2 为该驱动首个含此 kext 的 KDK 版本）。
 
 - 架构：**x86_64 + arm64e** 通用二进制（`lipo -archs` 实测）
 - Bundle ID：`com.apple.driver.AppleSunrise`
@@ -15,10 +19,10 @@
 
 kext 的 `LSMinimumSystemVersion` 决定它能加载的最低系统版本：
 
-- 系统 **26.7.x** → 用本目录的 `AppleSunrise.kext`（KDK 25G241）
-- 系统 **26.0–26.6** → 必须下载对应自己系统 build 的 KDK（推荐用镜像 <https://github.com/dortania/KdkSupportPkg/releases>，同 build 号），解包后取 `System/Library/Extensions/AppleSunrise.kext`
-  （原帖实测用的是 `KDK_26.3_25D5087f`，镜像内有）
-- 26.7.1 用户注意：即使你的系统是 26.7.1，本 kext 也只在「系统 DEXT 不认卡」时才需要注入
+- 系统 **26.7.x+** → `AppleSunrise.kext`（KDK 25G241，本仓库已备）
+- 系统 **26.3 – 26.6** → `AppleSunrise-26.3.kext`（KDK 25D5087f，原帖同款，本仓库已备）
+- 系统 **26.0 – 26.2** → 自行下载对应 build 的 KDK 提取（镜像 <https://github.com/dortania/KdkSupportPkg/releases>，选同 build 号）
+- 26.7.1 用户注意：即使系统是 26.7.1，也只在「系统 DEXT 不认卡」时才需要注入
 
 ## 提取方法（自行操作时）
 

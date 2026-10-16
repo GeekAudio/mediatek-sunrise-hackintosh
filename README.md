@@ -36,7 +36,7 @@ sw_vers -productVersion
 | `patches/` | `Kernel-Add-AppleSunrise.xml` | 注入 `AppleSunrise.kext` 的 config 片段 |
 | | `DeviceProperties-Add.xml` | 免编译 device-id 伪装（OpenCore DeviceProperties） |
 | | `boot-args.txt` | 全部相关启动参数 |
-| `kexts/macos26/` | `AppleSunrise.kext` | HAL kext（官方 KDK 26.7.1/25G241 提取，x86_64+arm64e；26.0–26.6 需换同 build KDK） |
+| `kexts/macos26/` | `AppleSunrise.kext`（26.7.1/25G241）+ `AppleSunrise-26.3.kext`（26.3/25D5087f，原帖同款） | HAL kext（官方 KDK 原样提取，x86_64+arm64e；26.0–26.2 需自行提取） |
 | `kexts/macos15/` | `Lilu` / `SimpleMtkBtFw` / `SimpleMtkBtPatcher` / `SimpleMtkWlan` + `SimpleMTK-1.0.0.zip` | **macOS 15 Sequoia 路线**（第三方 kext + 预编译客户端，固件内置，不碰系统卷） |
 | `research/` | — | 社区调试记录（出处与原理，发布包不含） |
 

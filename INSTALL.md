@@ -14,11 +14,13 @@ ls /System/Library/DriverExtensions/ | grep -i sunrise   # 应看到 AppleSunris
 记下你的 Wi-Fi 卡挂在哪个 root port（`ioreg` 输出 / Hackintool PCIe 列表 / `lspci` 均可）。
 本包 SSDT 默认 **RP04**，其他端口需要重新编译（见 `ssdt/README.md`），或改用第 3 步的 DeviceProperties 法。
 
-## 1. 取 `AppleSunrise.kext`（Apple 官方，不可再分发）
+## 1. 取 `AppleSunrise.kext`（本仓库已内置两版，从官方 KDK 原样提取）
 
-到 <https://developer.apple.com/download/all/> 搜索下载与你系统版本匹配的 **KDK**（实测可用 `KDK_26.3_25D5087f`），
-解压后 `System/Library/Extensions/AppleSunrise.kext` 拷入 `EFI/OC/Kexts/`，
-config.plist 中按 `patches/Kernel-Add-AppleSunrise.xml` 增加 `Kernel → Add` 条目。
+- 系统 **26.3 – 26.6** → 用 `kexts/macos26/AppleSunrise-26.3.kext`（KDK 26.3/25D5087f，原帖同款）
+- 系统 **26.7.x+** → 用 `kexts/macos26/AppleSunrise.kext`（KDK 26.7.1/25G241）
+- 系统 **26.0 – 26.2** → 自行下载对应 build 的 KDK 提取（方法见 `kexts/macos26/README.md`）
+
+拷入 `EFI/OC/Kexts/`，config.plist 按 `patches/Kernel-Add-AppleSunrise.xml` 增加 `Kernel → Add` 条目。
 
 ## 2. 设备伪装（二选一）
 
