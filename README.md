@@ -10,7 +10,7 @@
 | **macOS 26.7.1+，MT7932/RZ717 卡** | ✅ 什么都不需要——WLAN dext 已内置 IZUBA(MT7932) Wi-Fi 固件，插卡重启即可 |
 | **macOS 26.7.1+，MT7922/RZ616 卡** | ⚠️ **Wi-Fi 固件仍缺失**（26.7.1 25G241 实测：WLAN dext 内无 `*7922*` 文件）→ 仍需 `firmware/`；蓝牙已内置无需操作 |
 | macOS 26.0 – 26.6（任意 MT792x） | 本仓库全部：`firmware/` + `ssdt/` 或 `patches/` + KDK 中的 `AppleSunrise.kext` |
-| macOS 15 Sequoia | 不适用原生驱动——走第三方 kext 路线（见文末） |
+| macOS 15 Sequoia（任意 MT792x） | 原生驱动不存在——用 `kexts/macos15/` 第三方 kext 路线（见 [kexts/macos15/README.md](kexts/macos15/README.md)） |
 
 ## 快速开始
 
@@ -36,6 +36,8 @@ sw_vers -productVersion
 | `patches/` | `Kernel-Add-AppleSunrise.xml` | 注入 `AppleSunrise.kext` 的 config 片段 |
 | | `DeviceProperties-Add.xml` | 免编译 device-id 伪装（OpenCore DeviceProperties） |
 | | `boot-args.txt` | 全部相关启动参数 |
+| `kexts/macos26/` | `AppleSunrise.kext` | HAL kext（官方 KDK 26.7.1/25G241 提取，x86_64+arm64e；26.0–26.6 需换同 build KDK） |
+| `kexts/macos15/` | `Lilu` / `SimpleMtkBtFw` / `SimpleMtkBtPatcher` / `SimpleMtkWlan` + `SimpleMTK-1.0.0.zip` | **macOS 15 Sequoia 路线**（第三方 kext + 预编译客户端，固件内置，不碰系统卷） |
 | `research/` | — | 社区调试记录（出处与原理，发布包不含） |
 
 ## 使用方法
@@ -78,10 +80,9 @@ sw_vers -productVersion
 **Q：我的网卡是 Intel/Broadcom？**
 本包仅适用 MediaTek MT792x。
 
-## 备选：第三方路线
+## 备选：第三方路线（macOS 15 / 不想动系统卷）
 
-Sequoia、或蓝牙走 USB 的老模块：`flxxxxddd/SimpleMtkWlan`（Wi-Fi，认准 release）+ `laobamac/SimpleMtkBtFw`（蓝牙）。
-代价：无原生 Wi-Fi 菜单、无 AirDrop/Continuity、无 802.11ax。
+Sequoia、或不想写系统卷的用户：`kexts/macos15/` 已备好 Lilu 1.7.2 + SimpleMtkBtFw 1.0.0 + SimpleMtkWlan 1.2.0（fork 修复版），直接放入 EFI 即可。代价：无原生 Wi-Fi 菜单、无 AirDrop/Continuity、无 802.11ax。详见 [kexts/macos15/README.md](kexts/macos15/README.md)。
 
 ## 致谢
 

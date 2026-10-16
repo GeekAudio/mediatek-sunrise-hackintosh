@@ -77,6 +77,17 @@ log show --style compact --debug --last boot --info --predicate 'drv.' | tail -5
 - 改回 RELEASE 版 OpenCore、删 boot-arg、禁用 SSDT/Kernel-Add 条目即可恢复原状；
 - 系统卷改动会随启用 SIP + authenticated-root 重启自动清理，无需手动还原。
 
+## 路线 B：macOS 15 Sequoia（第三方 kext，不碰系统卷）
+
+Sequoia 没有原生 Sunrise 驱动，用 `kexts/macos15/`：
+
+1. 将 `Lilu.kext`、`SimpleMtkBtFw.kext`、`SimpleMtkBtPatcher.kext`、`SimpleMtkWlan.kext` 拷入 `EFI/OC/Kexts/`，`Kernel → Add` **按 Lilu → BtFw → BtPatcher → Wlan 顺序**启用；
+2. 解压 `kexts/macos15/SimpleMTK-1.0.0.zip`，把 `SimpleMTK.app` 拖入 `/Applications/`（**预编译成品，无需编译**）——扫描/连网靠它；
+3. 蓝牙按 `kexts/macos15/README.md` 处理两个致命坑（产品名勿改 + 两条 NVRAM data）；
+4. 排错用 `kexts/macos15/mtklog.sh`。
+
+限制：以太网式接口、无 AirDrop/Handoff/Continuity、无 802.11ax。详见 [kexts/macos15/README.md](kexts/macos15/README.md)。
+
 ## 不想写系统卷？替代方案
 
 按推荐顺序：
