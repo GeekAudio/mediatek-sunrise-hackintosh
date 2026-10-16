@@ -42,11 +42,15 @@
 
 | 文档 | 内容 |
 |---|---|
+| [docs/00-快速总结.md](docs/00-快速总结.md) | 一页式总结（先读这个） |
 | [docs/01-driver-architecture.md](docs/01-driver-architecture.md) | 驱动架构（DEXT + HAL）、芯片/PCI ID 匹配表、自带固件清单、本机检查命令 |
 | [docs/02-debug-method.md](docs/02-debug-method.md) | **调试五步法完整操作清单**、系统卷固件注入、日志判读表、2026-01 调试结论 |
 | [docs/03-bluetooth.md](docs/03-bluetooth.md) | 蓝牙路线：`/etc/bluetool` 固件法、改装 BlueToolFixup、AirPods 无声修复 |
 | [docs/04-third-party.md](docs/04-third-party.md) | 第三方 kext 路线（SimpleMtkWlan / SimpleMtkBtFw）与其硬限制 |
 | [docs/05-timeline.md](docs/05-timeline.md) | 2025-12 发现 → 2026-01 调试 → 2026-10 原生可用的完整时间线 |
+| [docs/06-original-files.md](docs/06-original-files.md) | 原帖附件 / 固件 / SSDT / 日志文件索引（含直链） |
+
+Release 说明见 [RELEASE.md](RELEASE.md)，版本记录见 [CHANGELOG.md](CHANGELOG.md)。
 
 ## 固件文件速查
 
