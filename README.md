@@ -9,7 +9,7 @@
 |---|---|
 | **macOS 26.7.1+，MT7932/RZ717 卡** | ✅ 什么都不需要——WLAN dext 已内置 IZUBA(MT7932) Wi-Fi 固件，插卡重启即可 |
 | **macOS 26.7.1+，MT7922/RZ616 卡** | ⚠️ **Wi-Fi 固件仍缺失**（26.7.1 25G241 实测：WLAN dext 内无 `*7922*` 文件）→ 仍需 `firmware/`；蓝牙已内置无需操作 |
-| macOS 26.0 – 26.6（任意 MT792x） | 本仓库全部：`firmware/` + `ssdt/` 或 `patches/` + KDK 中的 `AppleSunrise.kext` |
+| macOS 26.0 – 26.6（任意 MT792x） | 本仓库全部：`firmware/` + `ssdt/` 或 `patches/` + `kexts/macos26/`（26.3–26.6 直接用内置的 26.3 版 kext） |
 | macOS 15 Sequoia（任意 MT792x） | 原生驱动不存在——用 `kexts/macos15/` 第三方 kext 路线（见 [kexts/macos15/README.md](kexts/macos15/README.md)） |
 
 ## 快速开始
@@ -44,7 +44,7 @@ sw_vers -productVersion
 
 见 **[INSTALL.md](INSTALL.md)**。核心思路：
 
-1. 从 **KDK** 取 `AppleSunrise.kext`（Apple 官方，匹配系统版本）→ OpenCore 注入
+1. 注入 HAL kext：`kexts/macos26/AppleSunrise-26.3.kext`（26.3–26.6）或 `AppleSunrise.kext`（26.7+）已内置，直接取用（26.0–26.2 自行按 KDK 提取，见 `kexts/macos26/README.md`）
 2. 用 **SSDT** 或 **DeviceProperties** 把 device-id 伪装成 `0x7922`
 3. 关 SIP/authenticated-root，把本仓库固件写入系统卷并 bless 快照
 4. 加 boot-arg `wlan.debug.enable=0x1` 排错
