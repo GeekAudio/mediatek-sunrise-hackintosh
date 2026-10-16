@@ -1,0 +1,9 @@
+# MT7922 Sunrise — 相关 boot-args（NVRAM → Add → 7C436110-AB2A-4BBB-A880-FE41995C9F82 → boot-args）
+
+# 驱动详细日志开关（解锁 AppleSunriseWLAN.dext 的 drv.I 日志；正式使用可去掉）
+wlan.debug.enable=0x1
+
+# 以下为排错参数，按需添加：
+# mtk.wlan.startdelay=30   DEXT 延迟 30 秒启动。0x7922 伪装后 DEXT 每 ~10s 重试崩溃会拖垮系统
+#                          （Fenvi AX5400 实测 30；ASUS PCE-AXE59BT 需 45）
+# mtk.wlan.hangonstart=1   DEXT 挂起自锁，保证能进系统（Wi-Fi 不可用，终极手段）

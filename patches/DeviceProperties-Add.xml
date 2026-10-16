@@ -1,0 +1,21 @@
+<!--
+  OpenCore config.plist → DeviceProperties → Add
+  免编译的 MediaTek Wi-Fi device-id 伪装（DEXT 的 Info.plist 只匹配 14c3:7922）。
+
+  1) 把 PciRoot/Pci(...) 路径换成你机器上 MT7922 网卡的实际路径：
+     ioreg -l | grep -B30 'device-id' | grep -E 'acpi-path|pcidebug'
+     或在 Linux 用 lspci 找到 M.2 槽对应的 root port，例如 Pci(0x1C,0x4)。
+
+  2) device-id 值为 4 字节小端：
+     0x7922 → <data>InkAAA==</data>      (22 79 00 00，MT7922 推荐值)
+     0x7925 → <data>JXkAAA==</data>      (25 79 00 00，MT7925 用)
+     可用命令生成：printf '\x22\x79\x00\x00' | base64
+
+  3) 切勿改动 vendor-id（保持 0x14c3）。若卡被 SSDT-Disable_Network 之类的表藏掉
+     （ioreg -l | grep -A40 'pci14c3' 显示 ffffffff），先禁用该 SSDT。
+-->
+<key>PciRoot(0x0)/Pci(0x1C,0x4)/Pci(0x0,0x0)</key>
+<dict>
+    <key>device-id</key>
+    <data>InkAAA==</data>
+</dict>
